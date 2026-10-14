@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CRA IZENCIA</title>
+<meta name="application-name" content="CRA IZENCIA">
+<meta name="apple-mobile-web-app-title" content="CRA IZENCIA">
+<meta name="theme-color" content="#0E2A3B">
+<meta name="description" content="Compte rendu d'activité mensuel izencia">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="apple-touch-icon" href="icons/icon-192.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+
+  <header class="top">
+    <button class="icon-btn" id="prev" aria-label="Mois précédent"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+    <div class="month" id="monthLabel">
+      <span class="month-name" id="monthName">—</span>
+      <span class="month-year" id="monthYear">—</span>
+    </div>
+    <button class="icon-btn" id="next" aria-label="Mois suivant"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    <button class="icon-btn ghost" id="openSettings" aria-label="Réglages"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2.2"/><circle cx="10" cy="17" r="2.2"/></svg></button>
+  </header>
+
+  <section class="stats" aria-label="Totaux du mois">
+    <div class="stat stat-work"><span class="stat-v" id="tWork">0</span><span class="stat-l">jours travaillés</span></div>
+    <div class="stat stat-abs"><span class="stat-v" id="tAbs">0</span><span class="stat-l">jours d'absence</span></div>
+    <div class="stat stat-hs"><span class="stat-v" id="tHs">0</span><span class="stat-l">heures sup.</span></div>
+  </section>
+
+  <div class="progress" id="progress">
+    <div class="progress-bar"><i id="progressFill"></i></div>
+    <span id="progressText">—</span>
+  </div>
+
+  <section class="cal" aria-label="Calendrier">
+    <div class="dow"><span>L</span><span>M</span><span>M</span><span>J</span><span>V</span><span>S</span><span>D</span></div>
+    <div class="grid" id="grid"></div>
+    <div class="legend">
+      <span><i class="lg lg-w"></i>Travaillé</span>
+      <span><i class="lg lg-cp"></i>Congé</span>
+      <span><i class="lg lg-mal"></i>Maladie</span>
+      <span><i class="lg lg-exc"></i>Exceptionnel</span>
+      <span><i class="lg lg-css"></i>Sans solde</span>
+      <span><i class="lg lg-fer"></i>Férié</span>
+    </div>
+  </section>
+
+  <div class="hint">Appuie sur un jour pour le modifier.</div>
+</div>
+
+<nav class="actions">
+  <button class="btn-sig" id="openSig"><svg viewBox="0 0 24 24"><path d="M3 17c3-1 4-8 6-8s0 7 2 7 3-4 4-4 1 3 3 3h3M3 21h18"/></svg><span id="sigLabel">Signature</span></button>
+  <button class="btn-send" id="send"><span>Envoyer le CRA</span><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg></button>
+</nav>
+
+<!-- Feuille : édition d'un jour -->
+<div class="sheet" id="daySheet" hidden>
+  <div class="sheet-back" data-close></div>
+  <div class="sheet-card" role="dialog" aria-labelledby="dayTitle">
+    <div class="grab"></div>
+    <div class="day-head">
+      <button class="icon-btn" id="dayPrev" aria-label="Jour précédent"><svg viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></svg></button>
+      <div class="day-title"><h2 id="dayTitle">—</h2><span class="tag-fer" id="dayFer" hidden></span></div>
+      <button class="icon-btn" id="dayNext" aria-label="Jour suivant"><svg viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+
+    <div class="presets" id="presets">
+      <button data-p="w1">Journée</button>
+      <button data-p="w05">½ journée</button>
+      <button data-p="cp1">Congé payé</button>
+      <button data-p="cp05">½ travail ½ CP</button>
+      <button data-p="mal1">Maladie</button>
+      <button data-p="none">Vide</button>
+    </div>
+
+    <div class="rows" id="rows"></div>
+
+    <div class="hs">
+      <div class="hs-item"><label>HS jour <small>6h-22h</small></label><div class="stepper" data-k="hj"><button data-d="-0.5">−</button><output>0</output><button data-d="0.5">+</button></div></div>
+      <div class="hs-item"><label>HS nuit <small>22h-6h</small></label><div class="stepper" data-k="hn"><button data-d="-0.5">−</button><output>0</output><button data-d="0.5">+</button></div></div>
+    </div>
+
+    <label class="field"><span>Commentaire</span><textarea id="dayCom" rows="2" placeholder="Horaires des HS, précision pour la paie…"></textarea></label>
+    <p class="warn" id="dayWarn" hidden></p>
+    <button class="btn-done" data-close>Terminé</button>
+  </div>
+</div>
+
+<!-- Feuille : réglages -->
+<div class="sheet" id="setSheet" hidden>
+  <div class="sheet-back" data-close></div>
+  <div class="sheet-card" role="dialog" aria-labelledby="setTitle">
+    <div class="grab"></div>
+    <h2 id="setTitle" class="sheet-title">Réglages</h2>
+    <label class="field"><span>Nom du technicien</span><input id="sNom" autocomplete="name" placeholder="NOM Prénom"></label>
+    <label class="field"><span>Nom du client</span><input id="sClient" placeholder="Sopra Steria projet BNPP"></label>
+    <label class="field"><span>Envoyer à</span><input id="sTo" type="email" multiple inputmode="email" placeholder="paie@exemple.fr"></label>
+    <label class="field"><span>Copie (facultatif)</span><input id="sCc" type="email" multiple inputmode="email"></label>
+    <label class="field"><span>Objet</span><input id="sSubj"></label>
+    <label class="field"><span>Message</span><textarea id="sBody" rows="5"></textarea></label>
+    <p class="note">Repères : <code>{mois}</code> <code>{annee}</code> <code>{nom}</code>. Tout reste sur ce téléphone.</p>
+    <div class="danger">
+      <button id="refill">Re-remplir le mois (1 en semaine)</button>
+      <button id="clearMonth">Vider le mois</button>
+    </div>
+    <button class="btn-done" data-close>Enregistrer</button>
+  </div>
+</div>
+
+<!-- Feuille : signature -->
+<div class="sheet" id="sigSheet" hidden>
+  <div class="sheet-back" data-close></div>
+  <div class="sheet-card" role="dialog" aria-labelledby="sigTitle">
+    <div class="grab"></div>
+    <h2 id="sigTitle" class="sheet-title">Signature client</h2>
+    <p class="note" id="sigFor"></p>
+    <div class="pad"><canvas id="pad"></canvas><span class="pad-line"></span></div>
+    <div class="row2">
+      <button class="btn-soft" id="sigClear">Effacer</button>
+      <button class="btn-done" id="sigOk">Valider</button>
+    </div>
+  </div>
+</div>
+
+<!-- Feuille : envoi -->
+<div class="sheet" id="sendSheet" hidden data-mode="choose">
+  <div class="sheet-back" data-close></div>
+  <div class="sheet-card" role="dialog" aria-labelledby="sendTitle">
+    <div class="grab"></div>
+    <h2 id="sendTitle" class="sheet-title">Envoyer le CRA</h2>
+    <div class="file-card"><span class="xl">XLSX</span><div><b id="fileName">—</b><small id="fileMeta">—</small></div></div>
+    <dl class="dest"><dt>À</dt><dd id="destTo">—</dd><dt id="destCcL">Cc</dt><dd id="destCc">—</dd><dt>Objet</dt><dd id="destSubj">—</dd></dl>
+    <p class="warn" id="sendWarn" hidden></p>
+
+    <div class="m-choose">
+      <button class="btn-done btn-gmail" id="sendGmail"><svg viewBox="0 0 24 24"><path d="M4 12l16-8-6 16-2.5-6.5L4 12z"/></svg>Envoyer via Gmail</button>
+      <button class="btn-soft btn-wide" id="sendOther">Autre messagerie (Outlook…)</button>
+      <p class="note" id="gmailNote"></p>
+    </div>
+
+    <div class="m-other">
+      <ol class="steps">
+        <li id="st1"><b>Fichier enregistré</b> dans Téléchargements</li>
+        <li id="st2"><b>Ouvre le mail</b> pré-rempli</li>
+        <li id="st3"><b>Trombone ⟶ Joindre</b> et choisis le fichier</li>
+      </ol>
+      <div class="row2">
+        <button class="btn-soft" id="dlAgain">Re-télécharger</button>
+        <button class="btn-done" id="openMail">Ouvrir le mail</button>
+      </div>
+    </div>
+
+    <div class="m-sending"><div class="spinner" aria-hidden="true"></div><p id="sendingText">Envoi en cours…</p></div>
+
+    <div class="m-sent">
+      <div class="sent-ok"><span>✓</span><div><b>CRA envoyé</b><small id="sentText">—</small></div></div>
+      <button class="btn-done" data-close>Fermer</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="config.js"></script>
+<script src="lib/jszip.min.js"></script>
+<script src="mail.js"></script>
+<script src="cra-xlsx.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
