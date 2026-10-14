@@ -1,5 +1,5 @@
 /* Service worker CRA : fonctionne hors ligne. Ne touche QU'À ses propres caches (préfixe "cra-"). */
-const VERSION = 'cra-v2';
+const VERSION = 'cra-v3';
 const ASSETS = ['./', 'index.html', 'style.css', 'app.js', 'cra-xlsx.js', 'mail.js', 'config.js', 'lib/jszip.min.js', 'modele/CRA_izencia.xlsx',
   'manifest.json', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png'];
 

@@ -109,65 +109,137 @@
     const hs = (+o.hj || 0) + (+o.hn || 0);
     if (hs) b.insertAdjacentHTML('beforeend', '<span class="hsdot">' + fmt(hs) + 'h</span>');
     if (o.com) b.insertAdjacentHTML('beforeend', '<span class="comdot"></span>');
-    b.addEventListener('click', () => openDay(d));
+    b.dataset.d = d;
+    if (sel.has(d)) b.classList.add('sel');
+    b.addEventListener('click', () => tapDay(d));
     return b;
   }
 
-  /* ---------- Édition d'un jour ---------- */
-  let cur = null;
-  function openDay(d) {
-    cur = d;
-    const o = data.days[d] || (data.days[d] = {});
-    $('#dayTitle').textContent = JOURS[C.weekday(Y, M, d) - 1] + ' ' + d + ' ' + MOIS[M - 1];
-    const fer = H.get(M + '-' + d);
-    $('#dayFer').hidden = !fer; $('#dayFer').textContent = fer ? 'Férié · ' + fer : '';
+  /* ---------- Édition d'un ou plusieurs jours ---------- */
+  let curDays = [];          // jours en cours d'édition
+  let cur = null;            // jour unique (navigation ‹ ›)
+  const bulk = () => curDays.length > 1;
+  const dayObj = (d) => data.days[d] || (data.days[d] = {});
+  const JC = ['dim.', 'lun.', 'mar.', 'mer.', 'jeu.', 'ven.', 'sam.'];
+  function openDay(d) { cur = d; openEditor([d]); }
+  function openEditor(days) {
+    curDays = days.slice().sort((a, b) => a - b);
+    const one = !bulk(), d0 = curDays[0];
+    $('#daySheet').classList.toggle('bulk', !one);
+    if (one) {
+      $('#dayTitle').textContent = JOURS[C.weekday(Y, M, d0) - 1] + ' ' + d0 + ' ' + MOIS[M - 1];
+      const fer = H.get(M + '-' + d0);
+      $('#dayFer').hidden = !fer; $('#dayFer').textContent = fer ? 'Férié · ' + fer : '';
+      $('#daySub').hidden = true;
+    } else {
+      $('#dayTitle').textContent = curDays.length + ' jours sélectionnés';
+      $('#dayFer').hidden = true;
+      $('#daySub').hidden = false;
+      $('#daySub').textContent = curDays.map((d) => JC[C.weekday(Y, M, d) - 1] + ' ' + d).join(' · ');
+    }
+    const objs = curDays.map((d) => data.days[d] || {});
     const rows = $('#rows'); rows.innerHTML = '';
     TYPES.forEach((t) => {
+      const vals = objs.map((o) => +o[t.k] || 0);
+      const same = vals.every((v) => v === vals[0]);
       const r = document.createElement('div'); r.className = 'r'; r.style.setProperty('--c', t.color);
-      r.innerHTML = '<b><i></i>' + t.label + '</b><div class="seg"></div>';
+      r.innerHTML = '<b><i></i>' + t.label + (same ? '' : ' <em>variable</em>') + '</b><div class="seg"></div>';
       const seg = r.querySelector('.seg');
       t.vals.forEach((v) => {
         const btn = document.createElement('button');
         btn.textContent = v === 0 ? '–' : v === 0.5 ? '½' : '1';
-        btn.classList.toggle('on', (+o[t.k] || 0) === v && v !== 0);
-        btn.addEventListener('click', () => { if (v) o[t.k] = v; else delete o[t.k]; commit(); openDay(d); });
+        btn.classList.toggle('on', same && vals[0] === v && v !== 0);
+        btn.addEventListener('click', () => {
+          curDays.forEach((d) => { const o = dayObj(d); if (v) o[t.k] = v; else delete o[t.k]; });
+          commit(); openEditor(curDays);
+        });
         seg.appendChild(btn);
       });
       rows.appendChild(r);
     });
-    document.querySelectorAll('.stepper').forEach((s) => { s.querySelector('output').textContent = fmt(+o[s.dataset.k] || 0); });
-    $('#dayCom').value = o.com || '';
-    const tot = sum(o);
+    if (one) {
+      const o = objs[0];
+      document.querySelectorAll('.stepper').forEach((s) => { s.querySelector('output').textContent = fmt(+o[s.dataset.k] || 0); });
+      $('#dayCom').value = o.com || '';
+    }
+    const over = curDays.filter((d) => sum(data.days[d] || {}) > 1);
     const w = $('#dayWarn');
-    w.hidden = tot <= 1; w.textContent = 'Total de ' + fmt(tot) + ' jour pour cette date : plus d\'une journée.';
+    w.hidden = !over.length;
+    w.textContent = one ? 'Total de ' + fmt(sum(objs[0])) + ' jour pour cette date : plus d\'une journée.'
+      : over.length + ' jour(s) dépassent une journée : ' + over.join(', ') + '.';
     show('#daySheet');
   }
-  function commit() { const o = data.days[cur]; if (o && !Object.keys(o).length) delete data.days[cur]; save(); render(); }
+  function commit() {
+    curDays.forEach((d) => { const o = data.days[d]; if (o && !Object.keys(o).length) delete data.days[d]; });
+    save(); render();
+  }
   const PRESETS = { w1: { w: 1 }, w05: { w: 0.5 }, cp1: { cp: 1 }, cp05: { w: 0.5, cp: 0.5 }, mal1: { mal: 1 }, none: {} };
   $('#presets').addEventListener('click', (e) => {
     const p = e.target.closest('button'); if (!p) return;
-    const o = data.days[cur] || (data.days[cur] = {});
-    TYPES.forEach((t) => delete o[t.k]);
-    Object.assign(o, PRESETS[p.dataset.p] || {});
-    commit(); openDay(cur);
+    curDays.forEach((d) => { const o = dayObj(d); TYPES.forEach((t) => delete o[t.k]); Object.assign(o, PRESETS[p.dataset.p] || {}); });
+    commit(); openEditor(curDays);
+    if (bulk()) toast(curDays.length + ' jours modifiés');
   });
   document.querySelectorAll('.stepper').forEach((s) => s.addEventListener('click', (e) => {
-    const b = e.target.closest('button'); if (!b) return;
-    const o = data.days[cur] || (data.days[cur] = {});
+    const b = e.target.closest('button'); if (!b || bulk()) return;
+    const o = dayObj(cur);
     const v = Math.max(0, Math.min(24, (+o[s.dataset.k] || 0) + Number(b.dataset.d)));
     if (v) o[s.dataset.k] = v; else delete o[s.dataset.k];
     s.querySelector('output').textContent = fmt(v); commit();
   }));
   $('#dayCom').addEventListener('input', (e) => {
-    const o = data.days[cur] || (data.days[cur] = {});
+    if (bulk()) return;
+    const o = dayObj(cur);
     const v = e.target.value; if (v.trim()) o.com = v; else delete o.com; commit();
   });
-  const step = (dir) => { const n = C.daysInMonth(Y, M); const d = cur + dir; if (d >= 1 && d <= n) openDay(d); };
+  const step = (dir) => { if (bulk()) return; const n = C.daysInMonth(Y, M); const d = cur + dir; if (d >= 1 && d <= n) openDay(d); };
   $('#dayPrev').addEventListener('click', () => step(-1));
   $('#dayNext').addEventListener('click', () => step(1));
 
+  /* ---------- Sélection de plusieurs jours ---------- */
+  let selMode = false; const sel = new Set();
+  function enterSel(d) {
+    selMode = true; if (d) sel.add(d);
+    document.body.classList.add('selecting'); updateSel();
+  }
+  function exitSel() {
+    selMode = false; sel.clear(); curDays = cur ? [cur] : [];
+    document.body.classList.remove('selecting'); render();
+  }
+  function updateSel() {
+    $('#selCount').textContent = sel.size ? sel.size + ' jour' + (sel.size > 1 ? 's' : '') : 'Touche les jours';
+    $('#selEdit').disabled = !sel.size;
+    document.querySelectorAll('#grid .day[data-d]').forEach((b) => b.classList.toggle('sel', sel.has(+b.dataset.d)));
+  }
+  function tapDay(d) {
+    if (selMode) { if (sel.has(d)) sel.delete(d); else sel.add(d); updateSel(); return; }
+    openDay(d);
+  }
+  $('#selStart').addEventListener('click', () => enterSel());
+  $('#selCancel').addEventListener('click', exitSel);
+  $('#selWork').addEventListener('click', () => {
+    const n = C.daysInMonth(Y, M); for (let d = 1; d <= n; d++) if (ouvre(d)) sel.add(d); updateSel();
+  });
+  $('#selEdit').addEventListener('click', () => { if (sel.size) openEditor([...sel]); });
+  // appui long sur un jour → mode sélection
+  (() => {
+    let timer = null, start = null, fired = false;
+    const grid = $('#grid');
+    grid.addEventListener('pointerdown', (e) => {
+      const b = e.target.closest('.day[data-d]'); if (!b || selMode) return;
+      fired = false; start = { x: e.clientX, y: e.clientY };
+      timer = setTimeout(() => { fired = true; timer = null; if (navigator.vibrate) navigator.vibrate(15); enterSel(+b.dataset.d); }, 450);
+    });
+    const cancel = () => { if (timer) { clearTimeout(timer); timer = null; } };
+    grid.addEventListener('pointermove', (e) => { if (timer && start && Math.hypot(e.clientX - start.x, e.clientY - start.y) > 10) cancel(); });
+    ['pointerup', 'pointercancel', 'pointerleave'].forEach((ev) => grid.addEventListener(ev, cancel));
+    grid.addEventListener('contextmenu', (e) => { if (e.target.closest('.day')) e.preventDefault(); });
+    // le clic qui suit un appui long ne doit pas désélectionner le jour
+    grid.addEventListener('click', (e) => { if (fired) { fired = false; e.stopPropagation(); e.preventDefault(); } }, true);
+  })();
+
   /* ---------- Navigation mois ---------- */
-  const moveMonth = (k) => { save(); M += k; if (M < 1) { M = 12; Y--; } if (M > 12) { M = 1; Y++; } loadMonth(); };
+  const moveMonth = (k) => { if (selMode) exitSel(); save(); M += k; if (M < 1) { M = 12; Y--; } if (M > 12) { M = 1; Y++; } loadMonth(); };
   $('#prev').addEventListener('click', () => moveMonth(-1));
   $('#next').addEventListener('click', () => moveMonth(1));
 
@@ -175,9 +247,14 @@
   function show(id) { $(id).hidden = false; }
   function hide(el) { el.hidden = true; }
   document.querySelectorAll('.sheet').forEach((sh) => sh.addEventListener('click', (e) => {
-    if (e.target.closest('[data-close]')) { if (sh.dataset.mode === 'sending') return; if (sh.id === 'setSheet') readSettings(); hide(sh); }
+    if (e.target.closest('[data-close]')) { if (sh.dataset.mode === 'sending') return; if (sh.id === 'setSheet') readSettings(); hide(sh); if (sh.id === 'daySheet' && selMode) exitSel(); }
   }));
-  addEventListener('keydown', (e) => { if (e.key === 'Escape' && !sending) document.querySelectorAll('.sheet:not([hidden])').forEach(hide); });
+  addEventListener('keydown', (e) => {
+    if (e.key !== 'Escape' || sending) return;
+    const open = document.querySelectorAll('.sheet:not([hidden])');
+    open.forEach(hide);
+    if (selMode && (!open.length || [...open].some((s) => s.id === 'daySheet'))) exitSel();
+  });
 
   /* ---------- Réglages ---------- */
   const F = { nom: '#sNom', client: '#sClient', to: '#sTo', cc: '#sCc', subj: '#sSubj', body: '#sBody' };
