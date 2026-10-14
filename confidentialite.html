@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confidentialité — CRA IZENCIA</title>
+<meta name="theme-color" content="#0E2A3B">
+<link rel="icon" href="icons/icon-192.png">
+<style>
+  :root{--paper:#F2EFE8;--card:#FFFDF9;--ink:#0E2A3B;--ink-2:#4A5E6B;--teal:#12B3A0;--line:#E1DBCF}
+  @media (prefers-color-scheme:dark){:root{--paper:#0B1A23;--card:#11242F;--ink:#EAF1F2;--ink-2:#9DB0B8;--line:#21394A}}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+  header{background:#0E2A3B;color:#F2EFE8;padding:28px 18px 26px}
+  header .w,main{max-width:720px;margin:0 auto}
+  h1{margin:0;font-size:28px;letter-spacing:-.02em}
+  header p{margin:6px 0 0;color:var(--teal);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+  main{padding:18px 16px 40px}
+  section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:14px}
+  h2{margin:0 0 6px;font-size:18px}
+  p,li{color:var(--ink-2)} ul{margin:6px 0 0;padding-left:20px}
+  a{color:var(--teal)}
+</style>
+</head>
+<body>
+<header><div class="w"><p>CRA IZENCIA</p><h1>Règles de confidentialité</h1></div></header>
+<main>
+  <section>
+    <h2>En bref</h2>
+    <p>CRA IZENCIA est une application installée sur votre téléphone pour remplir votre compte rendu d'activité mensuel
+      et l'envoyer par e-mail. Elle n'a pas de serveur : aucune donnée ne nous est transmise.</p>
+  </section>
+  <section>
+    <h2>Données saisies</h2>
+    <ul>
+      <li>Vos réglages (nom, client, destinataires) et vos saisies (jours, absences, heures, commentaires, signature)
+        sont enregistrés <strong>uniquement dans la mémoire de votre téléphone</strong>.</li>
+      <li>Ils ne sont envoyés qu'au moment où vous envoyez votre CRA, et uniquement aux destinataires que vous avez choisis.</li>
+      <li>Désinstaller l'application ou effacer les données du navigateur les supprime définitivement.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Connexion Google (Gmail)</h2>
+    <ul>
+      <li>Si vous utilisez « Envoyer via Gmail », l'application demande une seule autorisation :
+        <strong>envoyer des e-mails en votre nom</strong> (<code>gmail.send</code>).</li>
+      <li>Elle ne peut <strong>ni lire, ni modifier, ni supprimer</strong> vos e-mails, contacts ou fichiers.</li>
+      <li>Le jeton d'accès fourni par Google reste sur votre téléphone, expire après environ une heure et sert uniquement
+        à envoyer le CRA que vous avez validé.</li>
+      <li>Aucune donnée Google n'est stockée ailleurs, partagée ou utilisée à d'autres fins.</li>
+      <li>Vous pouvez retirer l'accès à tout moment : <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Hébergement</h2>
+    <p>L'application est publiée sur GitHub Pages. GitHub peut journaliser des données techniques de connexion
+      (adresse IP) lors du téléchargement de l'application, selon sa propre politique de confidentialité.</p>
+  </section>
+  <section>
+    <h2>Contact</h2>
+    <p>Pour toute question : utilisez l'adresse e-mail d'assistance affichée sur l'écran de connexion Google de l'application.</p>
+  </section>
+</main>
+</body>
+</html>
