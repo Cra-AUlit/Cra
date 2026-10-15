@@ -13,9 +13,12 @@ Organisation GitHub dédiée, dépôt nommé `<orga>.github.io` → app à l'adr
 (Fonctionne aussi dans un sous-dossier, ex. `https://<orga>.github.io/CRA/`.)
 
 ## Installation sur le téléphone
-1. Ouvrir l'adresse dans Chrome.
-2. Menu ⋮ → **Ajouter à l'écran d'accueil** → Installer → icône « CRA IZENCIA ».
-3. Au premier lancement : nom, client, destinataire.
+**Android** : ouvrir l'adresse dans Chrome → menu ⋮ → **Ajouter à l'écran d'accueil** → Installer.
+
+**iPhone** : ouvrir l'adresse dans **Safari** → bouton **Partager** (carré avec flèche) → **Sur l'écran d'accueil** → Ajouter.
+Toujours remplir le CRA depuis l'icône installée : sur iPhone, l'app installée et Safari ont des mémoires séparées.
+
+Au premier lancement : nom, client, destinataire.
 
 ## Utilisation
 - Appuyer sur un jour pour le modifier. Tout est enregistré instantanément, et à la fermeture.

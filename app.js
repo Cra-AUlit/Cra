@@ -226,8 +226,9 @@
     let timer = null, start = null, fired = false;
     const grid = $('#grid');
     grid.addEventListener('pointerdown', (e) => {
+      fired = false; // un nouvel appui annule toujours le clic d'après appui long
       const b = e.target.closest('.day[data-d]'); if (!b || selMode) return;
-      fired = false; start = { x: e.clientX, y: e.clientY };
+      start = { x: e.clientX, y: e.clientY };
       timer = setTimeout(() => { fired = true; timer = null; if (navigator.vibrate) navigator.vibrate(15); enterSel(+b.dataset.d); }, 450);
     });
     const cancel = () => { if (timer) { clearTimeout(timer); timer = null; } };

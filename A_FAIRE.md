@@ -15,13 +15,14 @@
 - v2 — Nom de l'app : CRA IZENCIA ; manifest relatif (racine d'un domaine d'organisation ou sous-dossier)
 - v2 — Hors ligne : délai réseau 4 s puis version en cache ; polices de secours
 - v3 — Sélection de plusieurs jours : appui long ou bouton « Sélection », « Tous les jours ouvrés », modification groupée (préréglages et colonnes)
+- v4 — iPhone : plein écran, icône d'accueil dédiée ; correctif appui long (tap suivant avalé si le téléphone n'émet pas de clic après l'appui long)
 - v2 — Relecture indépendante du code + correctifs ; tests : générateur, fidélité, MIME, app, Gmail simulé, hors ligne
 
 ## En cours
 - Activation Gmail : projet Google Cloud + ID client dans config.js (GUIDE_GMAIL.md)
 
 ## À faire
-- (rien de prévu)
+- Test sur un vrai iPhone (installation, saisie, appui long, envoi) — impossible à tester ici
 
 ## Décisions prises
 - PWA seule, pas d'application Android native
@@ -37,3 +38,4 @@
 - Changer VERSION dans sw.js à chaque livraison
 - Hébergement : organisation Cra-AUlit, dépôt Cra → https://cra-aulit.github.io/Cra/
 - Sélection multiple : HS et commentaires restent jour par jour
+- iPhone : « Autre messagerie » ouvre le partage iOS avec le fichier déjà joint (destinataire à saisir) ; installation depuis Safari
