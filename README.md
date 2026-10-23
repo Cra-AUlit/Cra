@@ -10,7 +10,8 @@ Remplir son compte rendu d'activité mensuel sur téléphone et l'envoyer au for
 
 ## Hébergement
 Organisation GitHub dédiée, dépôt nommé `<orga>.github.io` → app à l'adresse `https://<orga>.github.io/`.
-(Fonctionne aussi dans un sous-dossier, ex. `https://<orga>.github.io/CRA/`.)
+(Fonctionne aussi dans un sous-dossier, ex. `https://<orga>.github.io/CRA/`, mais alors **aucun autre dépôt de l'organisation
+ne doit être publié sur GitHub Pages** : ils partageraient la mémoire du téléphone avec l'app, voir `PIEGES.md`.)
 
 ## Installation sur le téléphone
 **Android** : ouvrir l'adresse dans Chrome → menu ⋮ → **Ajouter à l'écran d'accueil** → Installer.

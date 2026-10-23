@@ -13,6 +13,7 @@
   const SCOPE = 'https://www.googleapis.com/auth/gmail.send';
   const AUTH_URL = 'https://accounts.google.com/o/oauth2/v2/auth';
   const SEND_URL = 'https://gmail.googleapis.com/gmail/v1/users/me/messages/send';
+  const REVOKE_URL = 'https://oauth2.googleapis.com/revoke';
   const XLSX = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
   const EMAIL = /^[^\s@,;<>"]+@[^\s@,;<>"]+\.[^\s@,;<>"]+$/;
 
@@ -126,5 +127,17 @@
     return { ok: false, status: res.status, uncertain: res.status >= 500, message: msg };
   }
 
-  return { SCOPE, parseAddresses, buildMime, authUrl, parseReturn, send, b64url, header };
+  /** Retire l'autorisation donnée à l'app (au mieux : hors ligne, on ignore l'erreur). */
+  async function revoke({ token, fetchImpl }) {
+    if (!token) return false;
+    try {
+      const res = await (fetchImpl || fetch)(REVOKE_URL, {
+        method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: 'token=' + encodeURIComponent(token),
+      });
+      return res.ok;
+    } catch (e) { return false; }
+  }
+
+  return { SCOPE, parseAddresses, buildMime, authUrl, parseReturn, send, revoke, b64url, header };
 });

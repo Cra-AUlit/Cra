@@ -11,6 +11,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0E2A3B">
 <meta name="description" content="Compte rendu d'activité mensuel izencia">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://gmail.googleapis.com https://oauth2.googleapis.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
@@ -120,6 +121,7 @@
     <div class="danger">
       <button id="refill">Re-remplir le mois (1 en semaine)</button>
       <button id="clearMonth">Vider le mois</button>
+      <button id="gmailOut" hidden>Se déconnecter de Gmail</button>
     </div>
     <button class="btn-done" data-close>Enregistrer</button>
   </div>

@@ -17,11 +17,16 @@
 - v3 — Sélection de plusieurs jours : appui long ou bouton « Sélection », « Tous les jours ouvrés », modification groupée (préréglages et colonnes)
 - v4 — iPhone : plein écran, icône d'accueil dédiée ; correctif appui long (tap suivant avalé si le téléphone n'émet pas de clic après l'appui long)
 - v2 — Relecture indépendante du code + correctifs ; tests : générateur, fidélité, MIME, app, Gmail simulé, hors ligne
+- 23/10 — Sécurité (audit, origine partagée cra-aulit.github.io) : service worker limité à son propre cache (cra-v5),
+  jeton Gmail effacé après envoi réussi et à expiration, bouton Réglages → « Se déconnecter de Gmail » (efface + révoque),
+  CSP sur index.html et confidentialite.html, page de confidentialité mise à jour
 
 ## En cours
 - Activation Gmail : projet Google Cloud + ID client dans config.js (GUIDE_GMAIL.md)
 
 ## À faire
+- Décider de l'origine : garder https://cra-aulit.github.io/Cra/ (n'avoir AUCUN autre dépôt Pages dans Cra-AUlit)
+  ou passer au dépôt `cra-aulit.github.io` (app à la racine) — voir PIEGES.md
 - Test sur un vrai iPhone (installation, saisie, appui long, envoi) — impossible à tester ici
 
 ## Décisions prises

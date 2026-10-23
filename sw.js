@@ -1,5 +1,5 @@
 /* Service worker CRA : fonctionne hors ligne. Ne touche QU'À ses propres caches (préfixe "cra-"). */
-const VERSION = 'cra-v4';
+const VERSION = 'cra-v5';
 const ASSETS = ['./', 'index.html', 'style.css', 'app.js', 'cra-xlsx.js', 'mail.js', 'config.js', 'lib/jszip.min.js', 'modele/CRA_izencia.xlsx',
   'manifest.json', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png'];
 
@@ -33,7 +33,8 @@ self.addEventListener('fetch', (e) => {
   // en 4 s ou échoue, version en cache. La réponse réseau tardive met quand même le cache à jour.
   let copy = null;
   const net = fetch(req).then((res) => { if (res.ok) copy = res.clone(); return res; });
-  const cached = () => caches.match(req, { ignoreSearch: true }).then((r) => r || (req.mode === 'navigate' ? caches.match('index.html') : undefined));
+  // uniquement NOTRE cache de version : l'origine est partagée avec d'autres dépôts, caches.match() global lirait aussi les leurs
+  const cached = () => caches.open(VERSION).then((c) => c.match(req, { ignoreSearch: true }).then((r) => r || (req.mode === 'navigate' ? c.match('index.html') : undefined)));
   e.respondWith(new Promise((resolve) => {
     let done = false;
     const finish = (r) => { if (!done && r) { done = true; resolve(r); } };

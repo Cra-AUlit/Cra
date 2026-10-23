@@ -259,7 +259,7 @@
 
   /* ---------- Réglages ---------- */
   const F = { nom: '#sNom', client: '#sClient', to: '#sTo', cc: '#sCc', subj: '#sSubj', body: '#sBody' };
-  function openSettings() { Object.entries(F).forEach(([k, s]) => { $(s).value = settings[k] || ''; }); show('#setSheet'); }
+  function openSettings() { Object.entries(F).forEach(([k, s]) => { $(s).value = settings[k] || ''; }); $('#gmailOut').hidden = !gmailOn(); show('#setSheet'); }
   function readSettings() { Object.entries(F).forEach(([k, s]) => { settings[k] = $(s).value.trim(); }); if (!settings.subj) settings.subj = DEFAULTS.subj; if (!settings.body) settings.body = DEFAULTS.body; saveSettings(); }
   Object.values(F).forEach((s) => $(s).addEventListener('input', readSettings));
   $('#openSettings').addEventListener('click', openSettings);
@@ -409,7 +409,14 @@
   });
 
   /* Option Gmail : connexion Google (redirection) puis envoi par l'API Gmail */
-  const tokenGet = () => { const t = store.get('cra.gtoken', null); return t && t.exp - Date.now() > 120000 ? t.t : null; };
+  // jeton gardé le moins longtemps possible : l'origine cra-aulit.github.io est partagée avec les autres dépôts de l'organisation
+  const tokenGet = () => { const t = store.get('cra.gtoken', null); if (t && t.exp - Date.now() > 120000) return t.t; localStorage.removeItem('cra.gtoken'); return null; };
+  $('#gmailOut').addEventListener('click', async () => {
+    const t = store.get('cra.gtoken', null);
+    localStorage.removeItem('cra.gtoken'); localStorage.removeItem('cra.pending');
+    if (t && t.t) await MAIL.revoke({ token: t.t });
+    toast(t ? 'Déconnecté de Gmail' : 'Aucune connexion Gmail sur ce téléphone');
+  });
   function googleLogin(retry) {
     const state = Array.from(crypto.getRandomValues(new Uint8Array(16)), (b) => b.toString(16).padStart(2, '0')).join('');
     flush();
@@ -429,6 +436,7 @@
       const mime = MAIL.buildMime({ to: r.to, cc: r.cc, subject: fill(settings.subj), body: fill(settings.body), filename: fileName(), data: new Uint8Array(await lastBlob.arrayBuffer()) });
       const res = await MAIL.send({ token, mime });
       if (res.ok) {
+        localStorage.removeItem('cra.gtoken'); // plus besoin du jeton une fois le CRA parti
         markSent();
         $('#sentText').textContent = 'À ' + r.to.join(', ') + ' · ' + new Date().toLocaleString('fr-FR', { dateStyle: 'short', timeStyle: 'short' });
         setMode('sent');
