@@ -1,0 +1,16 @@
+/* Pages annexes (confidentialité, conditions, 404) — mêmes couleurs que l'app. */
+:root{--paper:#F2EFE8;--card:#FFFDF9;--ink:#0E2A3B;--ink-2:#4A5E6B;--teal:#12B3A0;--link:#0C7A6D;--line:#E1DBCF;color-scheme:light}
+@media (prefers-color-scheme:dark){:root{--paper:#0B1A23;--card:#11242F;--ink:#EAF1F2;--ink-2:#9DB0B8;--link:#12B3A0;--line:#21394A;color-scheme:dark}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:#0E2A3B;color:#F2EFE8;padding:28px 18px 26px}
+header .w,main{max-width:720px;margin:0 auto}
+h1{margin:0;font-size:28px;letter-spacing:-.02em}
+header p{margin:6px 0 0;color:var(--teal);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
+header a{display:inline-block;margin-top:14px;color:#F2EFE8;font-weight:700;font-size:14px}
+main{padding:18px 16px 40px}
+section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:14px}
+h2{margin:0 0 6px;font-size:18px}
+p,li{color:var(--ink-2)} ul{margin:6px 0 0;padding-left:20px}
+a{color:var(--link)}
+code{overflow-wrap:anywhere}

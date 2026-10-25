@@ -5,12 +5,14 @@
   const C = window.CraXlsx;
   const MOIS = ['janvier', 'février', 'mars', 'avril', 'mai', 'juin', 'juillet', 'août', 'septembre', 'octobre', 'novembre', 'décembre'];
   const JOURS = ['dimanche', 'lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi'];
+  // fg = couleur du texte posé sur la couleur du type (contraste WCAG AA ≥ 4,5:1)
+  const DARK = '#0E2A3B';
   const TYPES = [ // ordre = colonnes du fichier
-    { k: 'w', label: 'Travaillé', color: 'var(--teal)', code: '', vals: [0, 0.5, 1] },
-    { k: 'cp', label: 'Congé payé', color: 'var(--cp)', code: 'CP', vals: [0, 0.5, 1] },
-    { k: 'mal', label: 'Maladie', color: 'var(--mal)', code: 'MAL', vals: [0, 1] },
-    { k: 'exc', label: 'Congé exceptionnel', color: 'var(--exc)', code: 'EXC', vals: [0, 0.5, 1] },
-    { k: 'css', label: 'Sans solde', color: 'var(--css)', code: 'SS', vals: [0, 0.5, 1] },
+    { k: 'w', label: 'Travaillé', color: 'var(--teal)', fg: DARK, code: '', vals: [0, 0.5, 1] },
+    { k: 'cp', label: 'Congé payé', color: 'var(--cp)', fg: DARK, code: 'CP', vals: [0, 0.5, 1] },
+    { k: 'mal', label: 'Maladie', color: 'var(--mal)', fg: '#fff', code: 'MAL', vals: [0, 1] },
+    { k: 'exc', label: 'Congé exceptionnel', color: 'var(--exc)', fg: '#fff', code: 'EXC', vals: [0, 0.5, 1] },
+    { k: 'css', label: 'Sans solde', color: 'var(--css)', fg: DARK, code: 'SS', vals: [0, 0.5, 1] },
   ];
   const DEFAULTS = {
     nom: '', client: '', to: '', cc: '',
@@ -101,6 +103,8 @@
       b.classList.add('filled');
       b.style.setProperty('--a', parts[0].color);
       b.style.setProperty('--b', parts[1] ? parts[1].color : 'transparent');
+      b.style.setProperty('--fa', parts[0].fg);
+      if (parts[1]) b.style.setProperty('--fb', parts[1].fg);
       if (!parts[1]) b.classList.add('half-empty');
     }
     const codes = [];
@@ -142,7 +146,7 @@
     TYPES.forEach((t) => {
       const vals = objs.map((o) => +o[t.k] || 0);
       const same = vals.every((v) => v === vals[0]);
-      const r = document.createElement('div'); r.className = 'r'; r.style.setProperty('--c', t.color);
+      const r = document.createElement('div'); r.className = 'r'; r.style.setProperty('--c', t.color); r.style.setProperty('--fg', t.fg);
       r.innerHTML = '<b><i></i>' + t.label + (same ? '' : ' <em>variable</em>') + '</b><div class="seg"></div>';
       const seg = r.querySelector('.seg');
       t.vals.forEach((v) => {
@@ -336,7 +340,13 @@
   const slug = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^A-Za-z0-9]+/g, '_').replace(/^_|_$/g, '');
   const fileName = () => 'CRA_izencia_' + Y + '-' + String(M).padStart(2, '0') + (settings.nom ? '_' + slug(settings.nom) : '') + '.xlsx';
   const redirectUri = () => location.origin + location.pathname.replace(/[^/]*$/, '');
-  let lastBlob = null, template = null, sending = false;
+  let lastBlob = null, template = null, sending = false, checked = true;
+  /** CRA incomplet : 1er appui = avertissement, 2e appui = envoi quand même (pas de confirm() natif). */
+  function confirmIncomplete() {
+    if (checked) return true;
+    checked = true; toast('CRA incomplet : appuie encore pour l\'envoyer quand même');
+    return false;
+  }
 
   async function getTemplate() { if (!template) { const r = await fetch('modele/CRA_izencia.xlsx'); if (!r.ok) throw new Error('Modèle Excel introuvable'); template = await r.arrayBuffer(); } return template; }
   async function makeFile() {
@@ -361,6 +371,7 @@
   /** Prépare le fichier et ouvre la feuille d'envoi. */
   async function prepareSend() {
     if (!settings.nom) { toast('Renseigne ton nom dans les réglages'); openSettings(); return false; }
+    if (!settings.client) { toast('Renseigne le nom du client dans les réglages'); openSettings(); return false; }
     const r = recipients(); if (r.err) { toast(r.err); openSettings(); return false; }
     lastBlob = await makeFile();
     $('#fileName').textContent = fileName();
@@ -368,10 +379,14 @@
     $('#destTo').textContent = r.to.join(', ');
     $('#destCc').textContent = r.cc.join(', '); $('#destCc').hidden = $('#destCcL').hidden = !r.cc.length;
     $('#destSubj').textContent = fill(settings.subj);
-    const n = C.daysInMonth(Y, M); let manquants = 0;
-    for (let d = 1; d <= n; d++) if (ouvre(d) && sum(data.days[d] || {}) < 1) manquants++;
-    const warn = $('#sendWarn'); warn.hidden = !manquants;
-    warn.textContent = manquants ? manquants + ' jour(s) ouvré(s) incomplet(s) — vérifie avant d\'envoyer.' : '';
+    const n = C.daysInMonth(Y, M); let manquants = 0, trop = 0;
+    for (let d = 1; d <= n; d++) { const t = sum(data.days[d] || {}); if (ouvre(d) && t < 1) manquants++; if (t > 1) trop++; }
+    const pb = [];
+    if (manquants) pb.push(manquants + ' jour(s) ouvré(s) incomplet(s)');
+    if (trop) pb.push(trop + ' jour(s) à plus d\'une journée');
+    const warn = $('#sendWarn'); warn.hidden = !pb.length;
+    warn.textContent = pb.length ? pb.join(' · ') + ' — vérifie avant d\'envoyer.' : '';
+    checked = !pb.length; // CRA incomplet : l'envoi demande un 2e appui
     $('#sendGmail').hidden = !gmailOn();
     $('#sendOther').className = gmailOn() ? 'btn-soft btn-wide' : 'btn-done';
     $('#sendOther').textContent = gmailOn() ? 'Autre messagerie (Outlook…)' : 'Préparer le mail';
@@ -387,7 +402,7 @@
 
   /* Option « Autre messagerie » : téléchargement + mail pré-rempli */
   $('#sendOther').addEventListener('click', async () => {
-    if (!lastBlob) return;
+    if (!lastBlob || !confirmIncomplete()) return;
     const file = new File([lastBlob], fileName(), { type: lastBlob.type });
     // si un jour Chrome accepte le partage direct de .xlsx, on l'utilise
     if (navigator.canShare && navigator.canShare({ files: [file] })) {
@@ -424,7 +439,7 @@
     location.replace(MAIL.authUrl({ clientId: CFG.googleClientId, redirectUri: redirectUri(), state }));
   }
   $('#sendGmail').addEventListener('click', () => {
-    if (sending) return;
+    if (sending || !confirmIncomplete()) return;
     const tok = tokenGet();
     if (tok) gmailSend(tok, false); else googleLogin(false);
   });

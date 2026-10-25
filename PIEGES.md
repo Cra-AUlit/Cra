@@ -16,3 +16,8 @@
 - `index.html` a une CSP en balise meta. Tout nouveau domaine (police, API, image) doit y être ajouté, sinon il est bloqué.
   Pas de script ni d'attribut `style="…"` en ligne dans index.html (bloqués) ; `element.style.setProperty` reste permis.
 - Changer VERSION dans sw.js à chaque livraison.
+
+## Pages annexes
+- `404.html` est servie par GitHub Pages à n'importe quelle profondeur (`/Cra/a/b/c`) : y garder des chemins absolus `/Cra/…`.
+  Si le dépôt change de nom ou passe à la racine d'un domaine, corriger ces chemins.
+- Couleurs : ne pas remettre du texte blanc sur sarcelle/orange/gris (contraste < 4,5:1), voir `fg` dans `TYPES`.

@@ -4,27 +4,16 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Confidentialité — CRA IZENCIA</title>
+<meta name="description" content="Règles de confidentialité de CRA IZENCIA : données gardées sur le téléphone, envoi Gmail limité à gmail.send, aucun cookie.">
+<meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#0E2A3B">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; img-src 'self'; base-uri 'none'; form-action 'none'">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'self'; img-src 'self'; base-uri 'none'; form-action 'none'">
 <link rel="icon" href="icons/icon-192.png">
-<style>
-  :root{--paper:#F2EFE8;--card:#FFFDF9;--ink:#0E2A3B;--ink-2:#4A5E6B;--teal:#12B3A0;--line:#E1DBCF}
-  @media (prefers-color-scheme:dark){:root{--paper:#0B1A23;--card:#11242F;--ink:#EAF1F2;--ink-2:#9DB0B8;--line:#21394A}}
-  *{box-sizing:border-box}
-  body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.6 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
-  header{background:#0E2A3B;color:#F2EFE8;padding:28px 18px 26px}
-  header .w,main{max-width:720px;margin:0 auto}
-  h1{margin:0;font-size:28px;letter-spacing:-.02em}
-  header p{margin:6px 0 0;color:var(--teal);font-weight:700;font-size:13px;letter-spacing:.12em;text-transform:uppercase}
-  main{padding:18px 16px 40px}
-  section{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;margin-top:14px}
-  h2{margin:0 0 6px;font-size:18px}
-  p,li{color:var(--ink-2)} ul{margin:6px 0 0;padding-left:20px}
-  a{color:var(--teal)}
-</style>
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="pages.css">
 </head>
 <body>
-<header><div class="w"><p>CRA IZENCIA</p><h1>Règles de confidentialité</h1></div></header>
+<header><div class="w"><p>CRA IZENCIA</p><h1>Règles de confidentialité</h1><a href="./">← Retour à l'application</a></div></header>
 <main>
   <section>
     <h2>En bref</h2>
@@ -34,10 +23,14 @@
   <section>
     <h2>Données saisies</h2>
     <ul>
-      <li>Vos réglages (nom, client, destinataires) et vos saisies (jours, absences, heures, commentaires, signature)
-        sont enregistrés <strong>uniquement dans la mémoire de votre téléphone</strong>.</li>
-      <li>Ils ne sont envoyés qu'au moment où vous envoyez votre CRA, et uniquement aux destinataires que vous avez choisis.</li>
-      <li>Désinstaller l'application ou effacer les données du navigateur les supprime définitivement.</li>
+      <li>Vos réglages (nom, client, destinataires, objet et message du mail) et vos saisies (jours, absences, heures,
+        commentaires, signature, date du dernier envoi) sont enregistrés <strong>uniquement dans la mémoire de votre téléphone</strong>
+        (stockage local du navigateur).</li>
+      <li>Ils ne sont envoyés qu'au moment où vous envoyez votre CRA, et uniquement aux destinataires que vous avez choisis :
+        par Gmail (voir ci-dessous) ou par la messagerie de votre choix, à qui vous joignez vous-même le fichier.</li>
+      <li>Le fichier Excel est fabriqué sur le téléphone, au moment de l'envoi.</li>
+      <li>Désinstaller l'application ou effacer les données du navigateur les supprime définitivement.
+        Réglages → « Vider le mois » efface les saisies du mois affiché.</li>
     </ul>
   </section>
   <section>
@@ -49,8 +42,20 @@
       <li>Le jeton d'accès fourni par Google reste sur votre téléphone, sert uniquement à envoyer le CRA que vous avez validé
         et est effacé dès l'envoi réussi (il expire de toute façon après environ une heure).</li>
       <li>Réglages → <strong>Se déconnecter de Gmail</strong> efface le jeton du téléphone et retire l'autorisation chez Google.</li>
-      <li>Aucune donnée Google n'est stockée ailleurs, partagée ou utilisée à d'autres fins.</li>
+      <li>Le CRA est transmis directement de votre téléphone à Google (API Gmail), sans intermédiaire.
+        Aucune donnée Google n'est stockée ailleurs, partagée ou utilisée à d'autres fins.</li>
       <li>Vous pouvez retirer l'accès à tout moment : <a href="https://myaccount.google.com/permissions">myaccount.google.com/permissions</a>.</li>
+    </ul>
+  </section>
+  <section>
+    <h2>Cookies et services tiers</h2>
+    <ul>
+      <li>L'application <strong>ne dépose aucun cookie</strong> et n'utilise aucune mesure d'audience ni publicité :
+        c'est pourquoi aucun bandeau de consentement n'est affiché.</li>
+      <li>Les polices de caractères sont chargées depuis Google Fonts : Google reçoit alors l'adresse IP du téléphone,
+        comme pour tout site web. Elles sont ensuite gardées en mémoire sur le téléphone.</li>
+      <li>La page de connexion Google (uniquement si vous choisissez « Envoyer via Gmail ») est un site de Google,
+        soumis à ses propres règles et cookies.</li>
     </ul>
   </section>
   <section>
@@ -60,7 +65,8 @@
   </section>
   <section>
     <h2>Contact</h2>
-    <p>Pour toute question : utilisez l'adresse e-mail d'assistance affichée sur l'écran de connexion Google de l'application.</p>
+    <p>Pour toute question : utilisez l'adresse e-mail d'assistance affichée sur l'écran de connexion Google de l'application,
+      ou contactez la personne qui vous a transmis le lien. Voir aussi les <a href="conditions.html">conditions d'utilisation</a>.</p>
   </section>
 </main>
 </body>

@@ -20,6 +20,9 @@
 - 23/10 — Sécurité (audit, origine partagée cra-aulit.github.io) : service worker limité à son propre cache (cra-v5),
   jeton Gmail effacé après envoi réussi et à expiration, bouton Réglages → « Se déconnecter de Gmail » (efface + révoque),
   CSP sur index.html et confidentialite.html, page de confidentialité mise à jour
+- 25/10 — Checklist « avant mise en ligne » : page conditions.html, liens Confidentialité/Conditions dans Réglages,
+  confidentialité complétée (cookies, Google Fonts), noindex + og:* + 404.html, contrastes WCAG AA corrigés,
+  client obligatoire et confirmation en 2 appuis d'un CRA incomplet, cache cra-v6
 
 ## En cours
 - Activation Gmail : projet Google Cloud + ID client dans config.js (GUIDE_GMAIL.md)
@@ -27,6 +30,9 @@
 ## À faire
 - Décider de l'origine : garder https://cra-aulit.github.io/Cra/ (n'avoir AUCUN autre dépôt Pages dans Cra-AUlit)
   ou passer au dépôt `cra-aulit.github.io` (app à la racine) — voir PIEGES.md
+- Google Cloud (quand Gmail sera activé) : renseigner aussi le lien des conditions
+  `https://cra-aulit.github.io/Cra/conditions.html` dans l'écran de consentement (facultatif)
+- Les tests `verif/` ont été retirés du dépôt (commit « suppr verif ») : ils restent dans l'historique git
 - Test sur un vrai iPhone (installation, saisie, appui long, envoi) — impossible à tester ici
 
 ## Décisions prises
@@ -41,6 +47,8 @@
 - Nom du fichier : CRA_izencia_AAAA-MM_Nom_Prenom.xlsx
 - Collègues : même lien, chacun ses réglages et ses données
 - Changer VERSION dans sw.js à chaque livraison
+- Outil personnel : noindex sur toutes les pages, pas de sitemap, pas d'analytics, pas de bannière cookies (aucun cookie)
+- CRA incomplet : pas de blocage dur (arrivée/départ en cours de mois possible) mais 2e appui obligatoire
 - Hébergement : organisation Cra-AUlit, dépôt Cra → https://cra-aulit.github.io/Cra/
 - Sélection multiple : HS et commentaires restent jour par jour
 - iPhone : « Autre messagerie » ouvre le partage iOS avec le fichier déjà joint (destinataire à saisir) ; installation depuis Safari

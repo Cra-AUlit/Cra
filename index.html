@@ -10,7 +10,14 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0E2A3B">
-<meta name="description" content="Compte rendu d'activité mensuel izencia">
+<meta name="description" content="Remplir sur téléphone et envoyer par mail son compte rendu d'activité mensuel izencia (Excel).">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="fr_FR">
+<meta property="og:title" content="CRA IZENCIA">
+<meta property="og:description" content="Remplir et envoyer son compte rendu d'activité mensuel izencia.">
+<meta property="og:url" content="https://cra-aulit.github.io/Cra/">
+<meta property="og:image" content="https://cra-aulit.github.io/Cra/icons/icon-512.png">
 <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self' data: blob:; connect-src 'self' https://gmail.googleapis.com https://oauth2.googleapis.com; worker-src 'self'; manifest-src 'self'; object-src 'none'; base-uri 'none'; form-action 'none'">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icons/icon-192.png">
@@ -111,9 +118,9 @@
   <div class="sheet-card" role="dialog" aria-labelledby="setTitle">
     <div class="grab"></div>
     <h2 id="setTitle" class="sheet-title">Réglages</h2>
-    <label class="field"><span>Nom du technicien</span><input id="sNom" autocomplete="name" placeholder="NOM Prénom"></label>
-    <label class="field"><span>Nom du client</span><input id="sClient" placeholder="Sopra Steria projet BNPP"></label>
-    <label class="field"><span>Envoyer à</span><input id="sTo" type="email" multiple inputmode="email" placeholder="paie@exemple.fr"></label>
+    <label class="field"><span>Nom du technicien</span><input id="sNom" autocomplete="name" placeholder="NOM Prénom" required></label>
+    <label class="field"><span>Nom du client</span><input id="sClient" placeholder="Sopra Steria projet BNPP" required></label>
+    <label class="field"><span>Envoyer à</span><input id="sTo" type="email" multiple inputmode="email" placeholder="paie@exemple.fr" required></label>
     <label class="field"><span>Copie (facultatif)</span><input id="sCc" type="email" multiple inputmode="email"></label>
     <label class="field"><span>Objet</span><input id="sSubj"></label>
     <label class="field"><span>Message</span><textarea id="sBody" rows="5"></textarea></label>
@@ -123,6 +130,7 @@
       <button id="clearMonth">Vider le mois</button>
       <button id="gmailOut" hidden>Se déconnecter de Gmail</button>
     </div>
+    <p class="note"><a href="confidentialite.html">Confidentialité</a> · <a href="conditions.html">Conditions d'utilisation</a></p>
     <button class="btn-done" data-close>Enregistrer</button>
   </div>
 </div>
