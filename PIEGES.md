@@ -16,6 +16,8 @@
 - `index.html` a une CSP en balise meta. Tout nouveau domaine (police, API, image) doit y être ajouté, sinon il est bloqué.
   Pas de script ni d'attribut `style="…"` en ligne dans index.html (bloqués) ; `element.style.setProperty` reste permis.
 - Changer VERSION dans sw.js à chaque livraison.
+- Polices locales (`fonts.css`) : une nouvelle graisse hors de 500–800 (Bricolage) ou 500–700 (JetBrains Mono) serait simulée par le navigateur ;
+  ne jamais remettre de lien Google Fonts (transfert d'IP vers Google, CSP `font-src 'self'`). Nouveau fichier de police → `ASSETS` de sw.js.
 
 ## Pages annexes
 - `404.html` est servie par GitHub Pages à n'importe quelle profondeur (`/Cra/a/b/c`) : y garder des chemins absolus `/Cra/…`.

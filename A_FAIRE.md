@@ -23,11 +23,18 @@
 - 25/10 — Checklist « avant mise en ligne » : page conditions.html, liens Confidentialité/Conditions dans Réglages,
   confidentialité complétée (cookies, Google Fonts), noindex + og:* + 404.html, contrastes WCAG AA corrigés,
   client obligatoire et confirmation en 2 appuis d'un CRA incomplet, cache cra-v6
+- 26/10 — Conformité LCEN/RGPD : page mentions-legales.html (éditeur et directeur de la publication Aulit42369, hébergeur GitHub, Inc. complet,
+  contact aulit42369@gmail.com), liée depuis Réglages, la confidentialité et les conditions ; confidentialité : « Qui fait quoi », durée de conservation
+  (signature comprise), transferts hors UE, droits + CNIL, contact en clair ; polices hébergées dans fonts/ (plus de Google Fonts, CSP resserrée), cache cra-v7
 
 ## En cours
 - Activation Gmail : projet Google Cloud + ID client dans config.js (GUIDE_GMAIL.md)
 
 ## À faire
+- Décision d'Olivier : nom « CRA IZENCIA » (marque d'un tiers dans le nom de l'app) — garder, ou renommer partout (manifest, titres, pages)
+- « Vider le mois » n'efface pas la signature (documenté dans la confidentialité) : l'effacer aussi ? (à décider)
+- Google Cloud : vérification de l'appli OAuth pour gmail.send (portée sensible) si plus de 100 utilisateurs ou pour retirer l'écran « non validée » ;
+  lien de confidentialité, conditions et e-mail d'assistance cohérents avec les pages
 - Décider de l'origine : garder https://cra-aulit.github.io/Cra/ (n'avoir AUCUN autre dépôt Pages dans Cra-AUlit)
   ou passer au dépôt `cra-aulit.github.io` (app à la racine) — voir PIEGES.md
 - Google Cloud (quand Gmail sera activé) : renseigner aussi le lien des conditions

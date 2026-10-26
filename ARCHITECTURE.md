@@ -8,8 +8,9 @@ PWA statique (GitHub Pages), sans serveur. Tout est dans le navigateur du télé
 - `cra-xlsx.js` : génération du .xlsx à partir de `modele/CRA_izencia.xlsx` (JSZip, `lib/`).
 - `mail.js` : MIME, URL OAuth Google (redirection, jeton dans le fragment), envoi API Gmail, révocation.
 - `config.js` : `googleClientId` (public ; vide = Gmail désactivé).
-- `sw.js` : hors ligne. Réseau d'abord (4 s) puis cache `VERSION` uniquement ; polices dans `VERSION-fonts`.
-- `confidentialite.html` : règles de confidentialité (écran de consentement Google). `conditions.html` : conditions d'utilisation.
+- `sw.js` : hors ligne. Réseau d'abord (4 s) puis cache `VERSION` uniquement (polices comprises, aucun cache à part).
+- `confidentialite.html` : règles de confidentialité (écran de consentement Google). `conditions.html` : conditions d'utilisation. `mentions-legales.html` : éditeur, hébergeur, contact (LCEN).
+- `fonts.css` + `fonts/` : Bricolage Grotesque et JetBrains Mono hébergées avec l'app (woff2 variables latin + latin-ext, licences OFL) ; plus aucun appel à Google Fonts.
   Les deux sont liées depuis Réglages et ont un lien « Retour à l'application ».
 - `404.html` : page introuvable (chemins absolus `/Cra/…`, servie à toute profondeur). `pages.css` : style partagé des pages annexes.
 - Toutes les pages : `noindex` (outil personnel, pas de robots.txt possible : il ne serait lu qu'à la racine du domaine), aucun cookie.
@@ -22,7 +23,7 @@ PWA statique (GitHub Pages), sans serveur. Tout est dans le navigateur du télé
 - OAuth : portée `gmail.send` seule, `state` aléatoire vérifié au retour, fragment effacé de l'URL.
 - Jeton : effacé après envoi réussi, à expiration, sur 401, ou par « Se déconnecter de Gmail » (révocation Google).
 - Service worker : ne lit et ne purge que ses propres caches.
-- CSP : scripts et styles du site seulement (+ Google Fonts), connexions vers Gmail et la révocation OAuth.
+- CSP : scripts, styles et polices du site seulement (`'self'`), connexions vers Gmail et la révocation OAuth.
   Pages annexes : `default-src 'none'`, styles `'self'` (pages.css), aucun script.
 - Envoi : nom, client et destinataire obligatoires ; CRA incomplet (jour ouvré < 1 ou jour > 1) → 2e appui pour envoyer.
 - Contraste WCAG AA : texte sur couleur de type = `fg` dans `TYPES` (app.js) ; teintes de texte `--teal-t`, `--mal-t` (style.css).
