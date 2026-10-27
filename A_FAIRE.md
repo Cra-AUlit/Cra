@@ -28,6 +28,7 @@
   (signature comprise), transferts hors UE, droits + CNIL, contact en clair ; polices hébergées dans fonts/ (plus de Google Fonts, CSP resserrée), cache cra-v7
 
 - 27/10 — Tests de non-régression `npm test` (16 tests, `tests/cra.test.mjs`)
+- 28/10 — Accessibilité : `<h1>` « CRA IZENCIA : compte rendu d'activité du mois » masqué visuellement (classe `.sr-only` dans style.css) et `<main class="app">` à la place de `<div class="app">`, rendu identique (positions comparées avant/après dans Chromium sans tête, 0 erreur console), cache cra-v8 ; docs de cadrage dans `docs/`
 
 ## En cours
 - Activation Gmail : projet Google Cloud + ID client dans config.js (GUIDE_GMAIL.md)

@@ -3,7 +3,8 @@
 PWA statique (GitHub Pages), sans serveur. Tout est dans le navigateur du téléphone.
 
 ## Modules
-- `index.html` : écran unique + feuilles (jour, réglages, signature, envoi). CSP en balise meta.
+- `index.html` : écran unique (`<main class="app">` avec un `<h1>` masqué par `.sr-only`) + feuilles (jour, réglages, signature, envoi). CSP en balise meta.
+- `docs/` : PRD, TRD, APP_FLOW, DESIGN_BRIEF, BACKEND_SCHEMA, IMPLEMENTATION_PLAN.
 - `app.js` : calendrier, saisie, réglages, signature, envoi (option A « Autre messagerie », option B Gmail).
 - `cra-xlsx.js` : génération du .xlsx à partir de `modele/CRA_izencia.xlsx` (JSZip, `lib/`).
 - `mail.js` : MIME, URL OAuth Google (redirection, jeton dans le fragment), envoi API Gmail, révocation.
