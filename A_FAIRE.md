@@ -27,6 +27,8 @@
   contact aulit42369@gmail.com), liée depuis Réglages, la confidentialité et les conditions ; confidentialité : « Qui fait quoi », durée de conservation
   (signature comprise), transferts hors UE, droits + CNIL, contact en clair ; polices hébergées dans fonts/ (plus de Google Fonts, CSP resserrée), cache cra-v7
 
+- 27/10 — Tests de non-régression `npm test` (16 tests, `tests/cra.test.mjs`)
+
 ## En cours
 - Activation Gmail : projet Google Cloud + ID client dans config.js (GUIDE_GMAIL.md)
 
@@ -39,7 +41,7 @@
   ou passer au dépôt `cra-aulit.github.io` (app à la racine) — voir PIEGES.md
 - Google Cloud (quand Gmail sera activé) : renseigner aussi le lien des conditions
   `https://cra-aulit.github.io/Cra/conditions.html` dans l'écran de consentement (facultatif)
-- Les tests `verif/` ont été retirés du dépôt (commit « suppr verif ») : ils restent dans l'historique git
+- Les anciens tests `verif/` (navigateur Playwright, fidélité Python) ont été retirés du dépôt (commit « suppr verif ») : ils restent dans l'historique git ; seuls les tests Node de `tests/` sont maintenus
 - Test sur un vrai iPhone (installation, saisie, appui long, envoi) — impossible à tester ici
 
 ## Décisions prises

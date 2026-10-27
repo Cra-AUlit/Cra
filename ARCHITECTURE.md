@@ -15,6 +15,10 @@ PWA statique (GitHub Pages), sans serveur. Tout est dans le navigateur du télé
 - `404.html` : page introuvable (chemins absolus `/Cra/…`, servie à toute profondeur). `pages.css` : style partagé des pages annexes.
 - Toutes les pages : `noindex` (outil personnel, pas de robots.txt possible : il ne serait lu qu'à la racine du domaine), aucun cookie.
 
+## Tests
+`npm test` → `tests/cra.test.mjs` (node:test, aucune dépendance) : jours fériés, génération du .xlsx (échappement, totaux), MIME, URL et retour OAuth, et garde-fous de PIEGES.md
+(fichiers de `ASSETS` existants, pas de `caches.match()` global, CSP sans script/style en ligne, `noindex`, chemins absolus de `404.html`, icônes du manifest).
+
 ## Données (localStorage, origine https://cra-aulit.github.io)
 - `cra.settings` (nom, client, destinataires, objet, message), `cra.m.AAAA-MM` (jours, signature, date d'envoi),
   `cra.pending` (state OAuth pendant la redirection, 15 min max), `cra.gtoken` (jeton Gmail, effacé dès que possible).

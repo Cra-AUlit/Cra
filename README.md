@@ -35,6 +35,9 @@ on désinstalle l'app ou si on efface les données de Chrome dans les paramètre
 Remplacer les fichiers du dépôt par ceux du nouveau zip. Sur le téléphone, fermer puis rouvrir l'app.
 
 ## Tests (PC, facultatif)
+Tests de non-régression sans dépendance (Node 20+) : `npm test` à la racine du dépôt (`tests/cra.test.mjs` : générateur .xlsx, MIME, OAuth, service worker, CSP, pages annexes).
+
+Anciens tests (dans l'historique git, dossier `verif/` retiré du dépôt) :
 ```
 cd verif
 npm install
