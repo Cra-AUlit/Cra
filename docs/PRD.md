@@ -29,4 +29,4 @@ du modèle izencia (`modele/CRA_izencia.xlsx`), par Gmail en direct ou par n'imp
 - Pas de référencement, d'analytics ni de cookie.
 
 ## Critères de réussite
-CRA du mois envoyé sans ressaisie dans Excel ; fichier conforme au modèle izencia. Autres critères : à confirmer par Olivier.
+CRA du mois envoyé sans ressaisie dans Excel ; fichier conforme au modèle izencia. Autres critères proposés : remplir un mois complet en moins de 5 minutes sur téléphone ; envoi par mail réussi du premier coup ; fonctionne hors ligne (proposé par Claude le 29/10/2026, à corriger si besoin).
