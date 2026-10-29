@@ -62,3 +62,5 @@
 - Hébergement : organisation Cra-AUlit, dépôt Cra → https://cra-aulit.github.io/Cra/
 - Sélection multiple : HS et commentaires restent jour par jour
 - iPhone : « Autre messagerie » ouvre le partage iOS avec le fichier déjà joint (destinataire à saisir) ; installation depuis Safari
+
+- **29/10** : `id: "/Cra/"` ajouté au manifest, `sitemap.xml` (4 pages) ajouté, test commun `tests/manifest-sw.test.js` (22 tests au total), cache `cra-v9`. Reste à déclarer le sitemap dans Search Console (voir A_FAIRE_OLIVIER).

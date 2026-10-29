@@ -1,5 +1,5 @@
 /* Service worker CRA : fonctionne hors ligne. Ne touche QU'À ses propres caches (préfixe "cra-"). */
-const VERSION = 'cra-v8';
+const VERSION = 'cra-v9';
 const ASSETS = ['./', 'index.html', 'style.css', 'app.js', 'cra-xlsx.js', 'mail.js', 'config.js', 'lib/jszip.min.js', 'modele/CRA_izencia.xlsx',
   'manifest.json', 'confidentialite.html', 'conditions.html', 'mentions-legales.html', 'pages.css', 'fonts.css',
   'fonts/bricolage-grotesque-latin.woff2', 'fonts/bricolage-grotesque-latin-ext.woff2', 'fonts/jetbrains-mono-latin.woff2', 'fonts/jetbrains-mono-latin-ext.woff2', 'icons/icon-192.png', 'icons/icon-512.png', 'icons/maskable-512.png', 'icons/apple-touch-icon.png'];

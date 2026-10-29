@@ -26,7 +26,7 @@ Créé seulement au moment d'envoyer ; avec Gmail il n'est pas enregistré sur l
 | `oauth2.googleapis.com` | « Se déconnecter de Gmail » | Révocation du jeton |
 
 ## Cache hors ligne
-Cache du service worker `cra-v8` : fichiers de l'app, aucune donnée de l'utilisateur.
+Cache du service worker `cra-v9` : fichiers de l'app, aucune donnée de l'utilisateur.
 
 ## Limite connue
 L'origine est partagée avec tout autre dépôt Pages de l'organisation Cra-AUlit : n'en publier aucun (voir `PIEGES.md`).

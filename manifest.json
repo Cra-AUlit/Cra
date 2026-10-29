@@ -3,6 +3,7 @@
   "short_name": "CRA IZENCIA",
   "description": "Remplir et envoyer son compte rendu d'activité mensuel izencia",
   "lang": "fr",
+  "id": "/Cra/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

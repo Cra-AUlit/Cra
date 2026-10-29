@@ -1,5 +1,5 @@
 {
   "name": "cra-izencia",
   "private": true,
-  "scripts": { "test": "node --test \"tests/*.test.mjs\"" }
+  "scripts": { "test": "node --test \"tests/*.test.*js\"" }
 }

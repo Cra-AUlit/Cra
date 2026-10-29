@@ -1,7 +1,7 @@
 # CRA IZENCIA — plan de mise en œuvre
 
 ## État au 28/10/2026
-- PWA en ligne sur `https://cra-aulit.github.io/Cra/` (cache `cra-v8`), 16 tests `npm test` verts.
+- PWA en ligne sur `https://cra-aulit.github.io/Cra/` (cache `cra-v9`), 16 tests `npm test` verts.
 - Fait : saisie complète, sélection multiple, signature, génération .xlsx fidèle au modèle, envoi « Autre messagerie », code Gmail prêt,
   sécurité (SW cloisonné, jeton effacé, CSP), pages légales LCEN/RGPD, polices locales, `<h1>` + `<main>` (28/10).
 
