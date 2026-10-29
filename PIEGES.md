@@ -28,3 +28,4 @@
 Chrome identifie une PWA installée par son `id` ; en changer = une autre appli, l'ancienne reste orpheline. Valeurs en ligne des 5 apps :
 ÉCHO `/` (echo-jeu.github.io depuis le 29/10 ; avant : `/Echo/` sur aulit42369.github.io) · LUMEN `/` (lumen-jeu.github.io) · Fragments `/fragments/` (fragments-jeu.github.io, volontairement différent de `/`) · Résonance `/` (resonance-jeu.github.io) · CRA `/Cra/` (cra-aulit.github.io/Cra/).
 `tests/manifest-sw.test.js` (identique dans les 5 projets) fige ces valeurs : si tu le modifies, copie-le à l'identique dans les 4 autres.
+- **`google9ad7f8bd44912903.html` (29/10)** : fichier de validation Google Search Console (propriété `https://cra-aulit.github.io/Cra/`). Ne jamais le supprimer ni le renommer, sinon la propriété perd sa validation.
