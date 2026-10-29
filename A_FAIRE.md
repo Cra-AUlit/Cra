@@ -64,3 +64,4 @@
 - iPhone : « Autre messagerie » ouvre le partage iOS avec le fichier déjà joint (destinataire à saisir) ; installation depuis Safari
 
 - **29/10** : `id: "/Cra/"` ajouté au manifest, `sitemap.xml` (4 pages) ajouté, test commun `tests/manifest-sw.test.js` (22 tests au total), cache `cra-v9`. Reste à déclarer le sitemap dans Search Console (voir A_FAIRE_OLIVIER).
+- **29/10** : ÉCHO a déménagé sur https://echo-jeu.github.io/ : test commun `manifest-sw` recopié (identité ÉCHO `/`), PIEGES mis à jour.

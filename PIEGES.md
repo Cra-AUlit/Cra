@@ -26,5 +26,5 @@
 
 ## Identités d'appli (manifest `id`) — NE JAMAIS CHANGER (29/10)
 Chrome identifie une PWA installée par son `id` ; en changer = une autre appli, l'ancienne reste orpheline. Valeurs en ligne des 5 apps :
-ÉCHO `/Echo/` (aulit42369.github.io/Echo/) · LUMEN `/` (lumen-jeu.github.io) · Fragments `/fragments/` (fragments-jeu.github.io, volontairement différent de `/`) · Résonance `/` (resonance-jeu.github.io) · CRA `/Cra/` (cra-aulit.github.io/Cra/).
+ÉCHO `/` (echo-jeu.github.io depuis le 29/10 ; avant : `/Echo/` sur aulit42369.github.io) · LUMEN `/` (lumen-jeu.github.io) · Fragments `/fragments/` (fragments-jeu.github.io, volontairement différent de `/`) · Résonance `/` (resonance-jeu.github.io) · CRA `/Cra/` (cra-aulit.github.io/Cra/).
 `tests/manifest-sw.test.js` (identique dans les 5 projets) fige ces valeurs : si tu le modifies, copie-le à l'identique dans les 4 autres.
